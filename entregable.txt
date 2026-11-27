@@ -1,0 +1,71 @@
+LABORATORIO: ANIMACIONES CSS CON TEMPLATES
+Alumna: Vianidxi Ximena Cruz Fuentes
+
+Pregunta 1: ¿Qué está sucediendo visualmente cuando mantienes el clic sobre
+una card? ¿Qué propiedad o selector CSS crees que lo provoca?
+Mientras se mantiene presionado el clic, la card desaparece y vuelve a entrar
+girando en diagonal desde el fondo, como si se acercara rotando en 3D hasta
+quedar en su lugar. Lo provoca la pseudoclase :active en el selector
+.card:active, que aplica la propiedad animation con los @keyframes
+slit-in-diagonal-2 (transform con translateZ y rotate3d, y opacity). Al
+soltar el clic deja de cumplirse :active y la animación se quita.
+
+Pregunta 2: ¿Qué cambió en el comportamiento de las cards al recargar la
+página?
+Al usar solo .card { animation: ... } la animación ya no depende de una
+acción del usuario: todas las cards se animan automáticamente una vez al
+cargar la página (entran girando en diagonal) y después se quedan quietas.
+Gracias al valor "both" se quedan en su estado final.
+
+Al cambiarlo a .card:hover la animación solo se ejecuta cuando el cursor
+entra en la card y se reinicia cada vez que el cursor vuelve a entrar.
+
+Pregunta 3: ¿Qué 3 selectores elegiste? Describe qué hace cada uno y cómo se
+comportó la animación.
+1. :first-child (.card:first-child): selecciona un elemento solo si es el
+   primer hijo de su padre. Como cada card está dentro de su propia columna,
+   todas son primer hijo, así que todas se animaron al cargar la página.
+2. [atributo] (.card[style]): selector de atributo, selecciona elementos que
+   tengan el atributo indicado. Todas las cards tienen style="width: 18rem;",
+   así que se animaron al cargar; le agregué un retraso de 200ms
+   (animation-delay) para notar la diferencia.
+3. :focus-within (.card:focus-within): selecciona el elemento cuando él o
+   alguno de sus descendientes tiene el foco. Al navegar con la tecla Tab y
+   llegar al botón "Go somewhere" de una card, esa card se anima.
+
+Observación: los selectores 1 y 2 tienen la misma especificidad que
+.card:hover, y como la animación ya se había ejecutado al cargar, el :hover
+dejaba de reiniciarla. Por eso los dejé comentados en animations.css (con su
+explicación) y quedó activo :focus-within junto con :hover y :active.
+
+Pregunta 4: ¿Para qué sirve un @keyframes en CSS?
+Sirve para definir los pasos de una animación: se le pone un nombre y se
+indica cómo debe verse el elemento en distintos momentos (0%, 50%, 100% o
+from/to). El navegador calcula los estados intermedios. Después ese nombre
+se usa en la propiedad animation para aplicarla a cualquier elemento, así
+que la misma animación se puede reutilizar con distintos selectores,
+duraciones o velocidades.
+
+Pregunta 5: Tres propiedades de las animaciones que usé
+transform — Permite modificar elementos: trasladarlos (translateX,
+translateY, translateZ), rotarlos (rotate3d), escalarlos (scale) o
+sesgarlos. En kenburns-top se usa scale(1.25) para hacer zoom a la imagen.
+
+animation-duration — Indica cuánto tarda la animación en completar un
+ciclo. Por ejemplo 450ms en la card y 5s en el zoom de la imagen; mientras
+más grande el valor, más lenta se ve.
+
+animation-timing-function — Define la curva de velocidad de la animación:
+linear avanza a la misma velocidad, ease-in empieza lento, ease-out termina
+lento y cubic-bezier() permite una curva personalizada (usada en
+tracking-in-expand y shake-horizontal).
+
+Extra: animation-iteration-count (infinite) hace que el botón palpite sin
+parar mientras el cursor está encima, y animation-fill-mode (both) conserva
+el estado del primer y último keyframe.
+
+Paso 4 (animaciones adicionales)
+- Navbar: el texto "Navbar" (.navbar-brand) entra con tracking-in-expand: las
+  letras empiezan juntas y transparentes y se separan hasta su lugar.
+- Botones de las cards: con :hover palpitan (pulsate-fwd) y con :active se
+  sacuden de lado a lado (shake-horizontal).

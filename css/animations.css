@@ -44,7 +44,191 @@
     }
 }
 /* CARD CALL */
+
+/* Paso 2.3: tres selectores distintos aplicados a .card
+   Los dos primeros se probaron y se dejan comentados porque animan las cards
+   al cargar y, al tener la misma especificidad que :hover, impedirían que la
+   animación vuelva a ejecutarse al pasar el cursor. */
+/* 1) :first-child -> el elemento que es primer hijo de su padre (aquí todas las cards) */
+/*
+.card:first-child{
+    -webkit-animation: slit-in-diagonal-2 450ms linear both;
+    animation: slit-in-diagonal-2 450ms linear both;
+}
+*/
+/* 2) [style] (selector de atributo) -> las cards que tienen el atributo style, con 200ms de retraso */
+/*
+.card[style]{
+    -webkit-animation: slit-in-diagonal-2 450ms linear 200ms both;
+    animation: slit-in-diagonal-2 450ms linear 200ms both;
+}
+*/
+/* 3) :focus-within -> se anima cuando el botón de la card recibe el foco (tecla Tab) */
+.card:focus-within{
+    -webkit-animation: slit-in-diagonal-2 450ms linear both;
+    animation: slit-in-diagonal-2 450ms linear both;
+}
+
+/* Paso 2.2: animación al pasar el cursor por encima */
+.card:hover{
+    -webkit-animation: slit-in-diagonal-2 450ms linear both;
+    animation: slit-in-diagonal-2 450ms linear both;
+}
+
+/* Paso 1: animación original al mantener presionado el clic */
 .card:active{
     -webkit-animation: slit-in-diagonal-2 450ms linear both;
     animation: slit-in-diagonal-2 450ms linear both;
+}
+
+/* Paso 3: animación de background de Animista (kenburns-top) */
+.card{
+    overflow: hidden;
+}
+@-webkit-keyframes kenburns-top {
+    0% {
+        -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0);
+        -webkit-transform-origin: 50% 16%;
+                transform-origin: 50% 16%;
+    }
+    100% {
+        -webkit-transform: scale(1.25) translateY(-15px);
+                transform: scale(1.25) translateY(-15px);
+        -webkit-transform-origin: top;
+                transform-origin: top;
+    }
+}
+@keyframes kenburns-top {
+    0% {
+        -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0);
+        -webkit-transform-origin: 50% 16%;
+                transform-origin: 50% 16%;
+    }
+    100% {
+        -webkit-transform: scale(1.25) translateY(-15px);
+                transform: scale(1.25) translateY(-15px);
+        -webkit-transform-origin: top;
+                transform-origin: top;
+    }
+}
+.card-img-top:hover{
+    -webkit-animation: kenburns-top 5s ease-out both;
+    animation: kenburns-top 5s ease-out both;
+}
+
+/* Paso 4.1: animación de texto en el navbar (Animista: tracking-in-expand) */
+@-webkit-keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.navbar-brand{
+    -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+/* Paso 4.2: animaciones en los botones de las cards */
+/* Al pasar el cursor (Animista: pulsate-fwd) */
+@-webkit-keyframes pulsate-fwd {
+    0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+}
+@keyframes pulsate-fwd {
+    0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+}
+.card .btn:hover{
+    -webkit-animation: pulsate-fwd 0.5s ease-in-out infinite both;
+    animation: pulsate-fwd 0.5s ease-in-out infinite both;
+}
+
+/* Al hacer clic (Animista: shake-horizontal) */
+@-webkit-keyframes shake-horizontal {
+    0%, 100% {
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+    }
+    10%, 30%, 50%, 70% {
+        -webkit-transform: translateX(-10px);
+                transform: translateX(-10px);
+    }
+    20%, 40%, 60% {
+        -webkit-transform: translateX(10px);
+                transform: translateX(10px);
+    }
+    80% {
+        -webkit-transform: translateX(8px);
+                transform: translateX(8px);
+    }
+    90% {
+        -webkit-transform: translateX(-8px);
+                transform: translateX(-8px);
+    }
+}
+@keyframes shake-horizontal {
+    0%, 100% {
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+    }
+    10%, 30%, 50%, 70% {
+        -webkit-transform: translateX(-10px);
+                transform: translateX(-10px);
+    }
+    20%, 40%, 60% {
+        -webkit-transform: translateX(10px);
+                transform: translateX(10px);
+    }
+    80% {
+        -webkit-transform: translateX(8px);
+                transform: translateX(8px);
+    }
+    90% {
+        -webkit-transform: translateX(-8px);
+                transform: translateX(-8px);
+    }
+}
+.card .btn:active{
+    -webkit-animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+    animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
